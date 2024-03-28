@@ -20,12 +20,12 @@ python3 -m pip install fastapi
 python3 -m pip install "uvicorn[standard]"
 python3 -m pip install python-dotenv
 ```
-3) Переходим на [сервис прогноза погоды](https://www.visualcrossing.com/sign-up), регистрируемся и из профиля сохраняем API_KEY в [файл](./.env)
+3) Переходим на [сервис прогноза погоды](https://www.visualcrossing.com/sign-up), регистрируемся и из профиля сохраняем API_KEY в .env
 4) Запускаем сервер
 
 ```bash
 uvicorn main:app --reload --port $PORT
 ```
-5) Переходим на [страницу общей информации сервера](http://localhost:8000/info)
+5) Переходим на [эндпоинт общей информации сервера](http://localhost:8000/info) (нужно поменять порт на указаный в .env)
 
-6) Переходим на [страницу информации о погоде сервера](http://localhost:$8000/info/weather)
+6) Переходим на [эндпоинт информации о погоде сервера](http://localhost:8000/info/weather) (нужно поменять порт на указаный в .env)

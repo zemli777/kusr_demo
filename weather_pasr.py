@@ -5,28 +5,35 @@ from datetime import date,timedelta
 from dotenv import load_dotenv
 
 
-def get_weather(): # функция вывода информации о погоде
+def go_to_weather_service(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28',include='hours',elements='datetime,hours,tempmax,tempmin,temp,humidity,pressure'):
 
-    load_dotenv()
-    today = date.today()
-    tomorrow = today + timedelta(days=1)
-
-    #прописывем параметры обращения к api сервиса погоды
+    print(location)
+    print(datestart)
+    print(dateend)
     endpoint =  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
     query_params = {"key": os.getenv("API_KEY"),
-                    #"location": "59.9386300,30.3141300",
-                    "location": "Saint-Petersburg RU",
-                    "datestart": today,
-                    "dateend": tomorrow,
+                    "location": location,
+                    "datestart": datestart,
+                    "dateend": dateend,
                     "unitGroup" : "metric",
-                    "include": "hours",
-                    "elements": "datetime,hours,tempmax,tempmin,temp,humidity,pressure" }
+                    "include": include,
+                    "elements": elements }
     response = requests.get(endpoint, query_params)
+    return response.json()
+
+
+def get_weather(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28'): # функция вывода информации о погоде
+
+    load_dotenv()
+    print(location)
+    print(datestart)
+    print(dateend)
+    response = go_to_weather_service(location,datestart,dateend)
     #парсим полученные данные
-    days = response.json()["days"]
-    stations = response.json()["address"]
-    data_from = days[0]["datetime"]
-    data_to = days[len(days)-1]["datetime"]
+    days = response["days"]
+    stations = response["address"]
+    date_from = days[0]["datetime"]
+    date_to = days[len(days)-1]["datetime"]
 
     temp = []
     humidity = []
@@ -46,8 +53,8 @@ def get_weather(): # функция вывода информации о пог�
 
     # подготавливаем данные к отправке в виде JSON
     data = {"city": stations,
-            "from": data_from,
-            "to": data_to,
+            "from": date_from,
+            "to": date_to,
             "temperature": temp_out,
             "humidity": humidity_out,
             "pressure": pressure_out }
@@ -56,9 +63,7 @@ def get_weather(): # функция вывода информации о пог�
 
 
 def get_info(): # функция вывода общей информации о проекте
-    json_data = {"version":"0.1", "service":"weather", "autor":"P.Zemlyanskiy"}
+    json_data = {"version":"0.1.1", "service":"weather", "autor":"P.Zemlyanskiy"}
     return json_data
-
-
 
 

@@ -21,8 +21,8 @@ def start():
 
 
 @app.get("/info/weather")
-def start():
-    weather = get_weather()
+def start(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28'):
+    weather = get_weather(location, datestart, dateend)
     print(weather)
     return weather
 
