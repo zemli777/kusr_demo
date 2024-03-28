@@ -1,16 +1,23 @@
 import requests
 import time
+import os
+from datetime import date,timedelta
+from dotenv import load_dotenv
 
-def get_weather(): # функция вывода информации о погоде 
-    
-    #прописывем параметры обращения к api сервиса погоды 
+
+def get_weather(): # функция вывода информации о погоде
+
+    load_dotenv()
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+
+    #прописывем параметры обращения к api сервиса погоды
     endpoint =  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
-    api_key =  "3Q6F87RZLUU6DDZFCQFMLKHGX"
-    query_params = {"key": api_key,
+    query_params = {"key": os.getenv("API_KEY"),
                     #"location": "59.9386300,30.3141300",
                     "location": "Saint-Petersburg RU",
-                    "datestart": "2024-03-27",
-                    "dateend": "2024-03-28",
+                    "datestart": today,
+                    "dateend": tomorrow,
                     "unitGroup" : "metric",
                     "include": "hours",
                     "elements": "datetime,hours,tempmax,tempmin,temp,humidity,pressure" }
@@ -20,13 +27,13 @@ def get_weather(): # функция вывода информации о пог�
     stations = response.json()["address"]
     data_from = days[0]["datetime"]
     data_to = days[len(days)-1]["datetime"]
-    
+
     temp = []
     humidity = []
     pressure = []
-    
-    for date in days:
-        hours = date["hours"]
+
+    for dates in days:
+        hours = dates["hours"]
 
         for hour in hours:
             temp.append(hour["temp"])
@@ -39,10 +46,10 @@ def get_weather(): # функция вывода информации о пог�
 
     # подготавливаем данные к отправке в виде JSON
     data = {"city": stations,
-            "from": data_from, 
-            "to": data_to, 
-            "temperature": temp_out, 
-            "humidity": humidity_out, 
+            "from": data_from,
+            "to": data_to,
+            "temperature": temp_out,
+            "humidity": humidity_out,
             "pressure": pressure_out }
     json_data = {"service": "weather", "data": data}
     return json_data
@@ -53,5 +60,5 @@ def get_info(): # функция вывода общей информации о
     return json_data
 
 
-    
-        
+
+
