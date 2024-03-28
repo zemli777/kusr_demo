@@ -21,7 +21,7 @@ pip install -r requirements.txt
 4) Запускаем сервер
 
 ```bash
-uvicorn main:app --reload --port $PORT
+python3 main.py
 ```
 5) Переходим на [эндпоинт общей информации сервера](http://localhost:8000/info) (нужно поменять порт на указаный в .env)
 

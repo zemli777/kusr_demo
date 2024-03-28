@@ -7,9 +7,6 @@ from dotenv import load_dotenv
 
 def go_to_weather_service(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28',include='hours',elements='datetime,hours,tempmax,tempmin,temp,humidity,pressure'):
 
-    print(location)
-    print(datestart)
-    print(dateend)
     endpoint =  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
     query_params = {"key": os.getenv("API_KEY"),
                     "location": location,
@@ -25,9 +22,6 @@ def go_to_weather_service(location='Saint-Petersburg RU',datestart='2024-03-28',
 def get_weather(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28'): # функция вывода информации о погоде
 
     load_dotenv()
-    print(location)
-    print(datestart)
-    print(dateend)
     response = go_to_weather_service(location,datestart,dateend)
     #парсим полученные данные
     days = response["days"]
