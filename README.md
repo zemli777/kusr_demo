@@ -14,6 +14,7 @@ python3 -m venv venv
 
 ```bash
 source venv/bin/activate
+source .env
 python3 -m pip install requests
 python3 -m pip install fastapi
 python3 -m pip install "uvicorn[standard]"
@@ -23,8 +24,8 @@ python3 -m pip install python-dotenv
 4) Запускаем сервер
 
 ```bash
-uvicorn main:app --reload
+uvicorn main:app --reload --port $PORT
 ```
 5) Переходим на [страницу общей информации сервера](http://localhost:8000/info)
 
-6) Переходим на [страницу информации о погоде сервера](http://localhost:8000/info/weather)
+6) Переходим на [страницу информации о погоде сервера](http://localhost:$8000/info/weather)
