@@ -15,10 +15,7 @@ python3 -m venv venv
 ```bash
 source venv/bin/activate
 source .env
-python3 -m pip install requests
-python3 -m pip install fastapi
-python3 -m pip install "uvicorn[standard]"
-python3 -m pip install python-dotenv
+pip install -r requirements.txt
 ```
 3) Переходим на [сервис прогноза погоды](https://www.visualcrossing.com/sign-up), регистрируемся и из профиля сохраняем API_KEY в .env
 4) Запускаем сервер
