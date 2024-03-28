@@ -57,7 +57,7 @@ def get_weather(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2
 
 
 def get_info(): # функция вывода общей информации о проекте
-    json_data = {"version":"0.1.1", "service":"weather", "autor":"P.Zemlyanskiy"}
+    json_data = {"version":os.getenv("VERSION"), "service":"weather", "autor":"P.Zemlyanskiy"}
     return json_data
 
 
