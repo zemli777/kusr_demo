@@ -35,9 +35,6 @@ class Days:
               self.hours_class[i] = hour
                             
 
-
-
-
 @dataclass
 class Weather_api:
   queryCost: int
@@ -55,6 +52,8 @@ class Weather_api:
               json_obj = json.loads(json.dumps(self.days[i]))
               day = Days(**json_obj)
               self.days_class[i] = day
+
+
 
 @dataclass
 class Data:
@@ -80,14 +79,7 @@ class Service:
                 print("####")
                 self.data_class = data_buf
                 print("##")
-                print(type(self.data_class))
-
-
-            # json_obj = json.loads(json.dumps(self.data))
-            # print (json_obj)
-            # self.data = Days(**json_obj)
-              
-
+                print(type(self.data_class))   
 
 
 
@@ -95,19 +87,20 @@ test = {"queryCost":48,"latitude":55.757,"longitude":37.615,"resolvedAddress":"Ð
 
 def go_to_weather_service(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28',include='hours',elements='datetime,hours,tempmax,tempmin,temp,humidity,pressure'):
 
-    # endpoint =  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
-    # query_params = {"key": os.getenv("API_KEY"),
-    #                 "location": location,
-    #                 "datestart": datestart,
-    #                 "dateend": dateend,
-    #                 "unitGroup" : "metric",
-    #                 "include": include,
-    #                 "elements": elements }
-    # response = requests.get(endpoint, query_params).json()
-    # print(response)
-    # json_obj =json.loads(response)
-    json_obj = json.loads(json.dumps(test))
-    weather = Weather_api(**json_obj)
+    endpoint =  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
+    query_params = {"key": os.getenv("API_KEY"),
+                    "location": location,
+                    "datestart": datestart,
+                    "dateend": dateend,
+                    "unitGroup" : "metric",
+                    "include": include,
+                    "elements": elements }
+    response = requests.get(endpoint, query_params).json()
+    print(response)
+    #json_obj =json.loads(response)
+    # json_obj = json.loads(json.dumps(test))
+    #weather = Weather_api(**json_obj)
+    weather = Weather_api(**response)
     return weather
 
 
