@@ -1,5 +1,5 @@
 from typing import Union
-
+from datetime import datetime, timedelta
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse,FileResponse
@@ -22,9 +22,13 @@ def start():
     print(info)
     return info
 
+today = datetime.now()
+yesterday = today - timedelta(days=1)
+today_str = today.strftime("%Y-%m-%d")
+yesterday_str = yesterday.strftime("%Y-%m-%d")
 
 @app.get("/info/weather")
-def start(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03-28'):
+def start(location='Saint-Petersburg RU',datestart=yesterday_str,dateend=today_str):
     weather = get_weather(location, datestart, dateend)
     print(weather)
     return weather
@@ -34,7 +38,8 @@ def start(location='Saint-Petersburg RU',datestart='2024-03-28',dateend='2024-03
 
 def main():
     load_dotenv()
-    uvicorn.run("main:app",host='0.0.0.0', port=os.getenv("PORT"))
+    port = int(os.getenv("PORT"))
+    uvicorn.run("main:app", host='0.0.0.0', port=port)
 
 if __name__ == "__main__":
     main()

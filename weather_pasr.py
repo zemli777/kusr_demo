@@ -33,7 +33,6 @@ class Days:
               json_obj = json.loads(json.dumps(self.hours[i]))
               hour = Hours(**json_obj)
               self.hours_class[i] = hour
-                            
 
 @dataclass
 class Weather_api:
@@ -46,7 +45,7 @@ class Weather_api:
   tzoffset: float
   days: dict
   days_class: dict = field(default_factory=dict)
-  
+
   def __post_init__(self):
          for i in range(0, len(self.days)):
               json_obj = json.loads(json.dumps(self.days[i]))

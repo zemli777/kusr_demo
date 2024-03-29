@@ -5,6 +5,9 @@
 ```bash
 mkdir hw1
 cd hw1
+```
+
+```bash
 sudo apt install python3-pip
 sudo apt install python3.10-venv
 python3 -m venv venv
