@@ -101,12 +101,35 @@ def go_to_weather_service(city: str, date_from: str, date_to: str, include='hour
     return weather
 
 
+def get_median(data):
+  
+    data.sort()
+    number = int(len(data)/2) 
+    return ((data[number] + data[number-1]) /2)
+
+
+
+def get_average(data):
+    average = 0
+    for number in data: 
+        average = average + number
+
+    return (average/len(data))
+
+
+
+
+
 def get_weather(date_from, date_to, city):
     """Функция вывода информации о погоде
     """
 
     # load_dotenv()
+    
     response = go_to_weather_service(city, date_from, date_to)
+        
+    
+    
     #парсим полученные данные
     
     # stations  = response.address
@@ -123,17 +146,19 @@ def get_weather(date_from, date_to, city):
             humidity.append(response.days_class[date].hours_class[hour].humidity)
             pressure.append(response.days_class[date].hours_class[hour].pressure)
 
-    temp_out = {"max": max(temp), "min": min(temp), "average": (max(temp)+min(temp))/2, "median": temp[int(len(temp)/2)]}
-    humidity_out = {"max": max(humidity), "min": min(humidity), "average": (max(humidity)+min(humidity))/2, "median": humidity[int(len(humidity)/2)]}
-    pressure_out = {"max": max(pressure), "min": min(pressure), "average": (max(pressure)+min(pressure))/2, "median": pressure[int(len(pressure)/2)]}
+    temp_out = {"average": get_average(temp), "median": get_median(temp), "min": min(temp), "max": max(temp)}
+    humidity_out = {"max": max(humidity), "min": min(humidity), "average": (max(humidity)+min(humidity))/2, "median": get_median(humidity)}
+    pressure_out = {"max": max(pressure), "min": min(pressure), "average": (max(pressure)+min(pressure))/2, "median": get_median(pressure)}
 
     
-    weather = {"city": city, "date_from": date_from, "date_to": date_to,"temperature_c": temp_out,"humidity": humidity_out,"pressure_mb": pressure_out}
+    #weather = {"city": city, "date_from": date_from, "date_to": date_to,"temperature_c": temp_out} #,"humidity": humidity_out,"pressure_mb": pressure_out}
+    weather = {"temperature_c": temp_out}
     service_json = {"service": "weather", "data": weather}
     # json_obj = json.loads(json.dumps(service_json))
     # service = Service(**json_obj)
     # output = service.to_json()  
     return service_json
+
 
 
 def get_info(): # функция вывода общей информации о проекте

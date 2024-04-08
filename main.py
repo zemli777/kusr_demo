@@ -28,7 +28,9 @@ yesterday_str = yesterday.strftime("%Y-%m-%d")
 
 @app.get("/info/weather")
 def start(city='SaintPetersburg', date_from=yesterday_str, date_to=today_str):
-    weather = get_weather(date_from, date_to, city=city)
+    try: 
+        weather = get_weather(date_from, date_to, city=city)
+    except ValueError: return "error of API_KEY" 
     pprint(weather)
     return weather
 

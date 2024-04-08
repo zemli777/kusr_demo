@@ -2,10 +2,6 @@
 
 1) Создаем каталог проекта и настраиваем там виртуальное окружение питона
 
-```bash
-mkdir hw1
-cd hw1
-```
 
 ```bash
 sudo apt install python3-pip
